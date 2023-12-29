@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "274542665125",
+    "project_id": "edu-sys-9fa30",
+    "storage_bucket": "edu-sys-9fa30.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:274542665125:android:c65c6d44639a123a429c4c",
+        "android_client_info": {
+          "package_name": "com.example.edu_sys"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCIsl22dI8z0ScaxqGtjjIHU7IoGE5DrBM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
