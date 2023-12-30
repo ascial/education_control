@@ -21,7 +21,6 @@ class _RegisterPageState extends State<RegisterPage> {
 
   final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();
-  final _jobTitleController = TextEditingController();
 
   @override
   void dispose() {
@@ -31,35 +30,28 @@ class _RegisterPageState extends State<RegisterPage> {
 
     _firstNameController.dispose();
     _lastNameController.dispose();
-    _jobTitleController.dispose();
     super.dispose();
   }
 
   Future signUp() async {
     if (passwordConfirmed()) {
       // Create user
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      UserCredential userCredential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: _emailController.text.trim(),
         password: _passwordController.text.trim(),
       );
 
-      // Add user details
-      addUserDetails(
-          _firstNameController.text.trim(),
-          _lastNameController.text.trim(),
-          _emailController.text.trim(),
-          _jobTitleController.text.trim());
+      // After creating the user, create new document
+      FirebaseFirestore.instance
+          .collection("users")
+          .doc(userCredential.user!.email)
+          .set({
+        "first_name": _firstNameController.text.trim(),
+        "last_name": _lastNameController.text.trim(),
+        "email": _emailController.text.trim(),
+      });
     }
-  }
-
-  Future addUserDetails(
-      String firstName, String lastName, String email, String jobTitle) async {
-    await FirebaseFirestore.instance.collection('users').add({
-      'firstName': firstName,
-      'lastName': lastName,
-      'email': email,
-      'jobTitle': jobTitle,
-    });
   }
 
   bool passwordConfirmed() {
@@ -103,6 +95,9 @@ class _RegisterPageState extends State<RegisterPage> {
                         borderRadius: BorderRadius.circular(12),
                       ),
                       hintText: 'Имя',
+                      hintStyle: const TextStyle(
+                        fontSize: 18,
+                      ),
                       fillColor: Colors.grey[200],
                       filled: true,
                     ),
@@ -125,28 +120,9 @@ class _RegisterPageState extends State<RegisterPage> {
                         borderRadius: BorderRadius.circular(12),
                       ),
                       hintText: 'Фамилия',
-                      fillColor: Colors.grey[200],
-                      filled: true,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 10),
-
-                // Job title textfield
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                  child: TextField(
-                    controller: _jobTitleController,
-                    decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.white),
-                        borderRadius: BorderRadius.circular(12),
+                      hintStyle: const TextStyle(
+                        fontSize: 18,
                       ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.deepOrange),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      hintText: 'Должность',
                       fillColor: Colors.grey[200],
                       filled: true,
                     ),
@@ -169,6 +145,9 @@ class _RegisterPageState extends State<RegisterPage> {
                         borderRadius: BorderRadius.circular(12),
                       ),
                       hintText: 'Почта',
+                      hintStyle: const TextStyle(
+                        fontSize: 18,
+                      ),
                       fillColor: Colors.grey[200],
                       filled: true,
                     ),
@@ -192,6 +171,9 @@ class _RegisterPageState extends State<RegisterPage> {
                         borderRadius: BorderRadius.circular(12),
                       ),
                       hintText: 'Пароль',
+                      hintStyle: const TextStyle(
+                        fontSize: 18,
+                      ),
                       fillColor: Colors.grey[200],
                       filled: true,
                     ),
@@ -215,6 +197,9 @@ class _RegisterPageState extends State<RegisterPage> {
                         borderRadius: BorderRadius.circular(12),
                       ),
                       hintText: 'Повторите пароль',
+                      hintStyle: const TextStyle(
+                        fontSize: 18,
+                      ),
                       fillColor: Colors.grey[200],
                       filled: true,
                     ),

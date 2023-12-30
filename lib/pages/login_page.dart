@@ -61,6 +61,9 @@ class _LoginPageState extends State<LoginPage> {
                         borderRadius: BorderRadius.circular(12),
                       ),
                       hintText: 'Почта',
+                      hintStyle: const TextStyle(
+                        fontSize: 18,
+                      ),
                       fillColor: Colors.grey[200],
                       filled: true,
                     ),
@@ -86,6 +89,9 @@ class _LoginPageState extends State<LoginPage> {
                         borderRadius: BorderRadius.circular(12),
                       ),
                       hintText: 'Пароль',
+                      hintStyle: const TextStyle(
+                        fontSize: 18,
+                      ),
                       fillColor: Colors.grey[200],
                       filled: true,
                     ),
