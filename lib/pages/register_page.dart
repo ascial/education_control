@@ -44,12 +44,13 @@ class _RegisterPageState extends State<RegisterPage> {
 
       // After creating the user, create new document
       FirebaseFirestore.instance
-          .collection("users")
+          .collection("Users")
           .doc(userCredential.user!.email)
           .set({
-        "first_name": _firstNameController.text.trim(),
-        "last_name": _lastNameController.text.trim(),
-        "email": _emailController.text.trim(),
+        'username': _emailController.text.split('@')[0],
+        'first_name': _firstNameController.text.trim(),
+        'last_name': _lastNameController.text.trim(),
+        'email': _emailController.text.trim(),
       });
     }
   }
@@ -87,11 +88,15 @@ class _RegisterPageState extends State<RegisterPage> {
                     controller: _firstNameController,
                     decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.white),
+                        borderSide: const BorderSide(
+                          color: Colors.white,
+                        ),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.deepOrange),
+                        borderSide: BorderSide(
+                          color: Colors.deepOrange[700]!,
+                        ),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       hintText: 'Имя',
@@ -112,11 +117,15 @@ class _RegisterPageState extends State<RegisterPage> {
                     controller: _lastNameController,
                     decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.white),
+                        borderSide: const BorderSide(
+                          color: Colors.white,
+                        ),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.deepOrange),
+                        borderSide: BorderSide(
+                          color: Colors.deepOrange[700]!,
+                        ),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       hintText: 'Фамилия',
@@ -137,11 +146,15 @@ class _RegisterPageState extends State<RegisterPage> {
                     controller: _emailController,
                     decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.white),
+                        borderSide: const BorderSide(
+                          color: Colors.white,
+                        ),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.deepOrange),
+                        borderSide: BorderSide(
+                          color: Colors.deepOrange[700]!,
+                        ),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       hintText: 'Почта',
@@ -163,11 +176,15 @@ class _RegisterPageState extends State<RegisterPage> {
                     controller: _passwordController,
                     decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.white),
+                        borderSide: const BorderSide(
+                          color: Colors.white,
+                        ),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.deepOrange),
+                        borderSide: BorderSide(
+                          color: Colors.deepOrange[700]!,
+                        ),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       hintText: 'Пароль',
@@ -193,7 +210,9 @@ class _RegisterPageState extends State<RegisterPage> {
                         borderRadius: BorderRadius.circular(12),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.deepOrange),
+                        borderSide: BorderSide(
+                          color: Colors.deepOrange[700]!,
+                        ),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       hintText: 'Повторите пароль',
@@ -211,7 +230,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 MaterialButton(
                   minWidth: 200,
                   onPressed: signUp,
-                  color: Colors.deepOrange,
+                  color: Colors.deepOrange[700],
                   child: const Text(
                     'Зарегистрироваться',
                     style: TextStyle(

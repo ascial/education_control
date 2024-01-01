@@ -28,18 +28,18 @@ class NavBar extends StatelessWidget {
                 fontSize: 17,
               ),
             ),
-            currentAccountPicture: const CircleAvatar(
+            currentAccountPicture: CircleAvatar(
               backgroundColor: Colors.white,
               child: ClipOval(
                 child: Icon(
-                  Icons.face,
+                  Icons.person,
                   size: 50,
-                  color: Colors.black,
+                  color: Colors.grey[800]!,
                 ),
               ),
             ),
-            decoration: const BoxDecoration(
-              color: Colors.deepOrange,
+            decoration: BoxDecoration(
+              color: Colors.deepOrange[700],
             ),
           ),
           ListTile(

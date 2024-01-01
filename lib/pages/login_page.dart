@@ -57,7 +57,7 @@ class _LoginPageState extends State<LoginPage> {
                         borderRadius: BorderRadius.circular(12),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.deepOrange),
+                        borderSide: BorderSide(color: Colors.deepOrange[700]!),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       hintText: 'Почта',
@@ -83,8 +83,8 @@ class _LoginPageState extends State<LoginPage> {
                         borderRadius: BorderRadius.circular(12),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                          color: Colors.deepOrange,
+                        borderSide: BorderSide(
+                          color: Colors.deepOrange[700]!,
                         ),
                         borderRadius: BorderRadius.circular(12),
                       ),
@@ -134,7 +134,7 @@ class _LoginPageState extends State<LoginPage> {
                 MaterialButton(
                   minWidth: 200,
                   onPressed: signIn,
-                  color: Colors.deepOrange,
+                  color: Colors.deepOrange[700],
                   child: const Text(
                     'Войти',
                     style: TextStyle(

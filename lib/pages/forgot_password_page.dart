@@ -51,7 +51,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.deepOrange,
+        backgroundColor: Colors.deepOrange[700],
         foregroundColor: Colors.white,
         elevation: 0,
       ),
@@ -79,8 +79,8 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   borderRadius: BorderRadius.circular(12),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(
-                    color: Colors.deepPurple,
+                  borderSide: BorderSide(
+                    color: Colors.deepOrange[700]!,
                   ),
                   borderRadius: BorderRadius.circular(12),
                 ),
@@ -96,7 +96,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
           MaterialButton(
             minWidth: 200,
             onPressed: passwordReset,
-            color: Colors.deepOrange,
+            color: Colors.deepOrange[700],
             child: const Text(
               'Восстановить пароль',
               style: TextStyle(
