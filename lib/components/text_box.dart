@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 class MyTextBox extends StatelessWidget {
   final String text;
   final String sectionName;
+  final void Function()? onPressed;
   const MyTextBox({
     super.key,
     required this.text,
     required this.sectionName,
+    required this.onPressed,
   });
 
   @override
@@ -30,12 +32,15 @@ class MyTextBox extends StatelessWidget {
               // Section name
               Text(
                 sectionName,
-                style: const TextStyle(fontSize: 17),
+                style: const TextStyle(
+                  fontSize: 17,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
 
               // Edit button
               IconButton(
-                  onPressed: () {},
+                  onPressed: onPressed,
                   icon: const Icon(
                     Icons.edit,
                   ))
@@ -45,7 +50,7 @@ class MyTextBox extends StatelessWidget {
           // Text
           Text(
             text,
-            style: TextStyle(fontSize: 17),
+            style: const TextStyle(fontSize: 17),
           ),
         ],
       ),

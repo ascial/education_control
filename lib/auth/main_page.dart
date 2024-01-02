@@ -1,5 +1,6 @@
 import 'package:edu_sys/auth/auth_page.dart';
-import 'package:edu_sys/pages/home_page.dart';
+import 'package:edu_sys/pages/profile_page.dart';
+import 'package:edu_sys/pages/verify_email_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +14,7 @@ class MainPage extends StatelessWidget {
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return const HomePage();
+            return const VerifyEmailPage();
           } else {
             return const AuthPage();
           }

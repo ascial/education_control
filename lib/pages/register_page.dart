@@ -45,12 +45,11 @@ class _RegisterPageState extends State<RegisterPage> {
       // After creating the user, create new document
       FirebaseFirestore.instance
           .collection("Users")
-          .doc(userCredential.user!.email)
+          .doc(userCredential.user!.uid)
           .set({
-        'username': _emailController.text.split('@')[0],
+        'id': _emailController.text.split('@')[0],
         'first_name': _firstNameController.text.trim(),
         'last_name': _lastNameController.text.trim(),
-        'email': _emailController.text.trim(),
       });
     }
   }
