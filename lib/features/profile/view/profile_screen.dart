@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:edu_sys/components/text_box.dart';
-import '../components/nav_bar.dart';
+import 'package:edu_sys/features/profile/widgets/text_box.dart';
+import '../../common/widgets/nav_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -46,7 +46,6 @@ class _HomePageState extends State<HomePage> {
             child: const Text('Отмена', style: TextStyle(color: Colors.black)),
             onPressed: () => Navigator.pop(context),
           ),
-
           TextButton(
             child: const Text('Сохранить',
                 style: TextStyle(color: Colors.deepOrange)),
@@ -60,23 +59,6 @@ class _HomePageState extends State<HomePage> {
       await usersCollection.doc(currentUser.uid).update({
         field: newValue,
       });
-    }
-  }
-
-  Future emailUpdate() async {
-    try {
-      await FirebaseAuth.instance
-          .currentUser!.updateEmail("oksana.fatkina.76@mail.ru");
-      
-    } on FirebaseAuthException catch (e) {
-      showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            content: Text(e.message.toString()),
-          );
-        },
-      );
     }
   }
 
@@ -107,13 +89,11 @@ class _HomePageState extends State<HomePage> {
             return ListView(
               children: [
                 const SizedBox(height: 50),
-
                 const Icon(
                   Icons.person,
                   size: 125,
                 ),
                 const SizedBox(height: 50),
-
                 const Padding(
                   padding: EdgeInsets.only(left: 25.0),
                   child: Text(
@@ -123,14 +103,12 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                 ),
-
                 MyTextBox(
                   sectionName: 'ID',
                   text: userData['id'],
                   onPressed: () => editField('id', 'ID'),
                 ),
                 const SizedBox(height: 25),
-
                 const Padding(
                   padding: EdgeInsets.only(left: 25.0),
                   child: Text(
@@ -140,24 +118,16 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                 ),
-
                 MyTextBox(
                   sectionName: 'Имя',
                   text: userData['first_name'],
                   onPressed: () => editField('first_name', 'Имя'),
                 ),
-
                 MyTextBox(
                   sectionName: 'Фамилия',
                   text: userData['last_name'],
                   onPressed: () => editField('last_name', 'Фамилия'),
                 ),
-
-                IconButton(
-                    onPressed: emailUpdate,
-                    icon: const Icon(
-                      Icons.update,
-                    ))
               ],
             );
           } else if (snapshot.hasError) {

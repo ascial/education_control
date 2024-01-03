@@ -1,5 +1,5 @@
 import 'package:edu_sys/firebase_options.dart';
-import 'package:edu_sys/auth/main_page.dart';
+import 'package:edu_sys/features/auth/redirect_home_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 

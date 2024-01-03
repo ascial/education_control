@@ -1,4 +1,4 @@
-import 'package:edu_sys/pages/forgot_password_page.dart';
+import 'package:edu_sys/features/auth/view/forgot_pass_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -107,14 +107,10 @@ class _LoginPageState extends State<LoginPage> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) {
-                                return const ForgotPasswordPage();
-                              },
-                            ),
-                          );
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return const ForgotPasswordPage();
+                          }));
                         },
                         child: const Text(
                           'Забыли пароль?',
