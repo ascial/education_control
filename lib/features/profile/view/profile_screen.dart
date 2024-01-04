@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:edu_sys/features/profile/widgets/text_box.dart';
-import '../../common/widgets/nav_bar.dart';
+import 'package:edu_sys/features/common/appbar/appbar.dart';
+import 'package:edu_sys/features/common/navbar/navbar.dart';
+import 'package:edu_sys/features/profile/widgets/user_data_listview.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -55,7 +56,7 @@ class _HomePageState extends State<HomePage> {
       ),
     );
 
-    if (newValue.trim().length > 0) {
+    if (newValue.trim().isNotEmpty) {
       await usersCollection.doc(currentUser.uid).update({
         field: newValue,
       });
@@ -65,77 +66,25 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.deepOrange[700],
-        foregroundColor: Colors.white,
-        elevation: 0,
-        centerTitle: true,
-        title: const Text(
-          'Профиль',
-          style: TextStyle(
-            color: Colors.white,
-          ),
-        ),
-      ),
-      drawer: const NavBar(),
+      appBar: const MyAppBar(title: 'Профиль'),
+      drawer: const MyNavBar(),
       body: StreamBuilder<DocumentSnapshot>(
         stream: FirebaseFirestore.instance
             .collection('Users')
-            .doc(currentUser.uid!)
+            .doc(currentUser.uid)
             .snapshots(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             final userData = snapshot.data!.data() as Map<String, dynamic>;
-            return ListView(
-              children: [
-                const SizedBox(height: 50),
-                const Icon(
-                  Icons.person,
-                  size: 125,
-                ),
-                const SizedBox(height: 50),
-                const Padding(
-                  padding: EdgeInsets.only(left: 25.0),
-                  child: Text(
-                    'Аккаунт',
-                    style: TextStyle(
-                      fontSize: 17,
-                    ),
-                  ),
-                ),
-                MyTextBox(
-                  sectionName: 'ID',
-                  text: userData['id'],
-                  onPressed: () => editField('id', 'ID'),
-                ),
-                const SizedBox(height: 25),
-                const Padding(
-                  padding: EdgeInsets.only(left: 25.0),
-                  child: Text(
-                    'Личные данные',
-                    style: TextStyle(
-                      fontSize: 17,
-                    ),
-                  ),
-                ),
-                MyTextBox(
-                  sectionName: 'Имя',
-                  text: userData['first_name'],
-                  onPressed: () => editField('first_name', 'Имя'),
-                ),
-                MyTextBox(
-                  sectionName: 'Фамилия',
-                  text: userData['last_name'],
-                  onPressed: () => editField('last_name', 'Фамилия'),
-                ),
-              ],
+            return UserDataListView(
+              userData: userData,
+              editData: editField,
             );
           } else if (snapshot.hasError) {
             return Center(
-              child: Text('Ошибка ${snapshot.error}'),
+              child: Text('Что-то пошло не так: ${snapshot.error}'),
             );
           }
-
           return const Center(
             child: CircularProgressIndicator(),
           );

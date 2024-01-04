@@ -1,7 +1,5 @@
 import 'dart:async';
-
 import 'package:edu_sys/features/profile/view/profile_screen.dart';
-import 'package:edu_sys/features/common/widgets/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -14,12 +12,12 @@ class VerifyEmailPage extends StatefulWidget {
 
 class _VerifyEmailPageState extends State<VerifyEmailPage> {
   bool isEmailVerified = false;
+  bool canResendEmail = false;
   Timer? timer;
 
   @override
   void initState() {
     super.initState();
-
     isEmailVerified = FirebaseAuth.instance.currentUser!.emailVerified;
 
     if (!isEmailVerified) {
@@ -41,19 +39,18 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
     if (isEmailVerified) timer?.cancel();
   }
 
+  Future sendVerificationEmail() async {
+    await FirebaseAuth.instance.currentUser!.sendEmailVerification();
+
+    setState(() => canResendEmail = false);
+    await Future.delayed(const Duration(minutes: 1));
+    setState(() => canResendEmail = true);
+  }
+
   @override
   void dispose() {
     timer?.cancel();
     super.dispose();
-  }
-
-  Future sendVerificationEmail() async {
-    try {
-      final user = FirebaseAuth.instance.currentUser!;
-      await user.sendEmailVerification();
-    } catch (e) {
-      Utils.showSnackBar(e.toString());
-    }
   }
 
   @override
@@ -67,7 +64,7 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
             centerTitle: true,
           ),
           body: Padding(
-            padding: EdgeInsets.all(16),
+            padding: const EdgeInsets.all(16),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -92,8 +89,26 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
                     style:
                         TextStyle(fontSize: 19, fontWeight: FontWeight.normal),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    if (canResendEmail == true) {
+                      sendVerificationEmail();
+                    }
+                  },
                 ),
+                TextButton(
+                  style: TextButton.styleFrom(
+                    fixedSize: const Size(245, 30),
+                    backgroundColor: Colors.grey[200],
+                  ),
+                  child: const Text(
+                    'Отмена',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 19,
+                    ),
+                  ),
+                  onPressed: () => FirebaseAuth.instance.signOut(),
+                )
               ],
             ),
           ),

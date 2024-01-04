@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class MyTextBox extends StatelessWidget {
+class UserDataContainer extends StatelessWidget {
   final String text;
   final String sectionName;
-  final void Function()? onPressed;
-  const MyTextBox({
+  final void Function() onPressed;
+  const UserDataContainer({
     super.key,
     required this.text,
     required this.sectionName,
@@ -29,16 +29,13 @@ class MyTextBox extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              // Section name
               Text(
                 sectionName,
                 style: const TextStyle(
-                  fontSize: 17,
+                  fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-
-              // Edit button
               IconButton(
                   onPressed: onPressed,
                   icon: const Icon(
@@ -46,11 +43,9 @@ class MyTextBox extends StatelessWidget {
                   ))
             ],
           ),
-
-          // Text
           Text(
             text,
-            style: const TextStyle(fontSize: 17),
+            style: const TextStyle(fontSize: 20),
           ),
         ],
       ),

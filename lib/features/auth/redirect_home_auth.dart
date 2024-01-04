@@ -1,6 +1,5 @@
 import 'package:edu_sys/features/auth/toggle_auth_screens.dart';
 import 'package:edu_sys/features/auth/view/verify_email_screen.dart';
-import 'package:edu_sys/features/profile/view/profile_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +13,7 @@ class MainPage extends StatelessWidget {
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return const HomePage();
+            return const VerifyEmailPage();
           } else {
             return const AuthPage();
           }
