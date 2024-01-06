@@ -1,5 +1,5 @@
-import 'package:edu_sys/features/auth/view/login_screen.dart';
 import 'package:edu_sys/features/auth/view/register_screen.dart';
+import 'package:edu_sys/features/auth2/view/login_screen.dart';
 import 'package:flutter/material.dart';
 
 class AuthPage extends StatefulWidget {
@@ -21,7 +21,7 @@ class _AuthPageState extends State<AuthPage> {
   @override
   Widget build(BuildContext context) {
     if (showLoginPage) {
-      return LoginPage(showRegisterPage: toggleScreens);
+      return const LoginScreen();
     } else {
       return RegisterPage(showLoginPage: toggleScreens);
     }
