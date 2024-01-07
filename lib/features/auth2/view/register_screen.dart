@@ -1,6 +1,7 @@
 import 'package:edu_sys/features/auth2/widgets/auth_button.dart';
 import 'package:edu_sys/features/auth2/widgets/auth_help_text.dart';
 import 'package:edu_sys/features/auth2/widgets/auth_textfield.dart';
+import 'package:edu_sys/repositories/auth/auth_repository.dart';
 import 'package:flutter/material.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -16,6 +17,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final lastNameController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
+
+  final authRepository = AuthRepository();
 
   @override
   void dispose() {
@@ -55,15 +58,25 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
                 AuthTextField(
                   hint: 'Пароль',
-                  obscureText: false,
+                  obscureText: true,
                   controller: passwordController,
                 ),
                 AuthTextField(
                   hint: 'Подтвердите пароль',
-                  obscureText: false,
+                  obscureText: true,
                   controller: confirmPasswordController,
                 ),
-                AuthButton(onPressed: () {}, text: 'ЗАРЕГИСТРИРОВАТЬСЯ'),
+                AuthButton(
+                    onPressed: () {
+                      authRepository.signUp(
+                        emailController.text.trim(),
+                        firstNameController.text.trim(),
+                        lastNameController.text.trim(),
+                        passwordController.text.trim(),
+                        confirmPasswordController.text.trim(),
+                      );
+                    },
+                    text: 'ЗАРЕГИСТРИРОВАТЬСЯ'),
                 AuthHelpText(
                   text: 'Уже есть аккаунт?',
                   activeText: 'Войдите',

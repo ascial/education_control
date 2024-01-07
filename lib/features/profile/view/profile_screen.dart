@@ -48,8 +48,10 @@ class _HomePageState extends State<HomePage> {
             onPressed: () => Navigator.pop(context),
           ),
           TextButton(
-            child: const Text('Сохранить',
-                style: TextStyle(color: Colors.deepOrange)),
+            child: const Text(
+              'Сохранить',
+              style: TextStyle(color: Colors.deepOrange),
+            ),
             onPressed: () => Navigator.of(context).pop(newValue),
           )
         ],

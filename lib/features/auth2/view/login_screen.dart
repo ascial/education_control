@@ -1,6 +1,7 @@
 import 'package:edu_sys/features/auth2/widgets/auth_help_text.dart';
 import 'package:edu_sys/features/auth2/widgets/auth_button.dart';
 import 'package:edu_sys/features/auth2/widgets/auth_textfield.dart';
+import 'package:edu_sys/repositories/auth/auth_repository.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -13,6 +14,8 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  
+  final authRepository = AuthRepository();
 
   @override
   void dispose() {
@@ -53,7 +56,10 @@ class _LoginScreenState extends State<LoginScreen> {
               AuthButton(
                 text: 'ВОЙТИ',
                 onPressed: () {
-                  
+                  authRepository.signIn(
+                    emailController.text.trim(),
+                    passwordController.text.trim(),
+                  );
                 },
               ),
               AuthHelpText(

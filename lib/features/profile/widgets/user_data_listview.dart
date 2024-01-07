@@ -28,9 +28,9 @@ class UserDataListView extends StatelessWidget {
         const SizedBox(height: 50),
         const UserDataPadding(fieldName: 'Аккаунт'),
         UserDataContainer(
-          text: userData['id'],
-          sectionName: 'ID',
-          onPressed: () => editData('id', 'ID'),
+          text: userData['username'],
+          sectionName: 'Логин',
+          onPressed: () => editData('username', 'ID'),
         ),
         const SizedBox(height: 25),
         const UserDataPadding(fieldName: 'Личные даные'),
