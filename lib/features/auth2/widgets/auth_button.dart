@@ -13,13 +13,13 @@ class AuthButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 15),
+      padding: const EdgeInsets.only(right: 16, left: 16, top: 5, bottom: 15),
       child: MaterialButton(
         padding: const EdgeInsets.symmetric(vertical: 12),
-        color: Colors.black,
+        color: Colors.green,
         textColor: Colors.white,
         minWidth: double.infinity,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         onPressed: onPressed,
         child: Text(
           text,

@@ -5,7 +5,7 @@ import 'package:edu_sys/features/auth2/view/register_screen.dart';
 
 final router = {
   '/': (context) => const AuthStateRedirect(),
-  '/register': (context) => const RegisterScreen(),
+  // '/register': (context) => const RegisterScreen(),
   '/login': (context) => const LoginScreen(),
   '/forgot_password': (context) => const ForgotPasswordScreen(),
 };
