@@ -28,4 +28,8 @@ class AuthRepository {
       });
     }
   }
+
+  Future resetPassword(String email) async {
+    await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+  }
 }

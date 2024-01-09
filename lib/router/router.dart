@@ -1,11 +1,13 @@
-import 'package:edu_sys/features/auth/redirect_home_auth.dart';
-import 'package:edu_sys/features/auth2/view/forgot_password_screen.dart';
-import 'package:edu_sys/features/auth2/view/login_screen.dart';
-import 'package:edu_sys/features/auth2/view/register_screen.dart';
+import 'package:edu_sys/features/auth/view/forgot_password_screen.dart';
+import 'package:edu_sys/features/auth/view/login_screen.dart';
+import 'package:edu_sys/features/auth/view/redirect_screen.dart';
+import 'package:edu_sys/features/auth/view/register_screen.dart';
+import 'package:edu_sys/features/profile/view/profile_screen.dart';
 
-final router = {
-  '/': (context) => const AuthStateRedirect(),
-  // '/register': (context) => const RegisterScreen(),
+final routes = {
+  '/': (context) => const RedirectScreen(),
+  '/register': (context) => const RegisterScreen(),
   '/login': (context) => const LoginScreen(),
   '/forgot_password': (context) => const ForgotPasswordScreen(),
+  '/profile': (context) => const ProfileScreen(),
 };

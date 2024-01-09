@@ -1,18 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:edu_sys/features/common/appbar/appbar.dart';
-import 'package:edu_sys/features/common/navbar/navbar.dart';
 import 'package:edu_sys/features/profile/widgets/user_data_listview.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class ProfileScreen extends StatefulWidget {
+  const ProfileScreen({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _ProfileScreenState extends State<ProfileScreen> {
   final currentUser = FirebaseAuth.instance.currentUser!;
   final usersCollection = FirebaseFirestore.instance.collection("Users");
 
@@ -68,8 +66,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const MyAppBar(title: 'Профиль'),
-      drawer: const MyNavBar(),
       body: StreamBuilder<DocumentSnapshot>(
         stream: FirebaseFirestore.instance
             .collection('Users')

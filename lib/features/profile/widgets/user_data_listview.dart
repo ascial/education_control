@@ -1,5 +1,6 @@
 import 'package:edu_sys/features/profile/widgets/user_data_container.dart';
 import 'package:edu_sys/features/profile/widgets/user_data_padding.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class UserDataListView extends StatelessWidget {
@@ -44,6 +45,12 @@ class UserDataListView extends StatelessWidget {
           sectionName: 'Фамилия',
           onPressed: () => editData('last_name', 'Фамилия'),
         ),
+        MaterialButton(
+          onPressed: () async {
+            await FirebaseAuth.instance.signOut();
+          },
+          color: Colors.black,
+        )
       ],
     );
   }

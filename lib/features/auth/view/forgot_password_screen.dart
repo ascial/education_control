@@ -1,112 +1,46 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:edu_sys/features/auth/widgets/auth_button.dart';
+import 'package:edu_sys/features/auth/widgets/auth_text_field.dart';
+import 'package:edu_sys/features/auth/widgets/auth_type_text.dart';
 import 'package:flutter/material.dart';
 
-class ForgotPasswordPage extends StatefulWidget {
-  const ForgotPasswordPage({super.key});
+class ForgotPasswordScreen extends StatefulWidget {
+  const ForgotPasswordScreen({super.key});
 
   @override
-  State<ForgotPasswordPage> createState() => _ForgotPasswordPageState();
+  State<ForgotPasswordScreen> createState() => _ForgotPasswordScreenState();
 }
 
-class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
-  final _emailController = TextEditingController();
-
-  @override
-  void dispose() {
-    _emailController.dispose();
-    super.dispose();
-  }
-
-  Future passwordReset() async {
-    try {
-      await FirebaseAuth.instance
-          .sendPasswordResetEmail(email: _emailController.text.trim());
-      showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            content: Text(
-              'Ссылка для восстановления пароля отправлена',
-              style: TextStyle(
-                fontSize: 18,
-              ),
-              textAlign: TextAlign.center,
-            ),
-          );
-        },
-      );
-    } on FirebaseAuthException catch (e) {
-      showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            content: Text(e.message.toString()),
-          );
-        },
-      );
-    }
-  }
+class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
+  final emailController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.deepOrange[700],
-        foregroundColor: Colors.white,
-        elevation: 0,
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.0),
-            child: Text(
-              'Для восстановления пароля введите адрес электронной почты',
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 20),
-            ),
-          ),
-          const SizedBox(height: 20),
-
-          // Email text field
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 25.0),
-            child: TextField(
-              controller: _emailController,
-              decoration: InputDecoration(
-                enabledBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(color: Colors.white),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.deepOrange[700]!,
-                  ),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                hintText: 'Почта',
-                fillColor: Colors.grey[200],
-                filled: true,
+      appBar: AppBar(backgroundColor: Colors.white),
+      body: Center(
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(Icons.school, size: 100, color: Colors.black),
+              const SizedBox(height: 100),
+              const AuthTypeText(text: 'Восстановление пароля'),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16),
+                child: Text(
+                    'Введите свою почту и мы отправим вам ссылку для восстановления пароля.'),
               ),
-            ),
-          ),
-          const SizedBox(height: 20),
-
-          // Restore password button
-          MaterialButton(
-            minWidth: 200,
-            onPressed: passwordReset,
-            color: Colors.deepOrange[700],
-            child: const Text(
-              'Восстановить пароль',
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.normal,
-                fontSize: 17,
+              AuthTextField(
+                obscureText: false,
+                controller: emailController,
               ),
-            ),
+              AuthButton(
+                onPressed: () {},
+                text: 'Отправить ссылку',
+              )
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

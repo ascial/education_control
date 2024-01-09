@@ -1,30 +1,28 @@
-import 'package:edu_sys/features/auth/view/forgot_password_screen.dart';
+import 'package:edu_sys/features/auth/widgets/auth_active_text.dart';
+import 'package:edu_sys/features/auth/widgets/auth_button.dart';
+import 'package:edu_sys/features/auth/widgets/auth_type_text.dart';
+import 'package:edu_sys/features/auth/widgets/auth_text_field.dart';
+import 'package:edu_sys/repositories/auth/auth_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatefulWidget {
-  final VoidCallback showRegisterPage;
-  const LoginPage({super.key, required this.showRegisterPage});
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginPageState extends State<LoginPage> {
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
+class _LoginScreenState extends State<LoginScreen> {
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
 
-  Future signIn() async {
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: _emailController.text.trim(),
-      password: _passwordController.text.trim(),
-    );
-  }
+  final authRepository = AuthRepository();
 
   @override
   void dispose() {
-    _emailController.dispose();
-    _passwordController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
     super.dispose();
   }
 
@@ -37,131 +35,62 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text(
-                  'Вход',
-                  style: TextStyle(
-                    fontSize: 30,
-                  ),
-                ),
-                const SizedBox(height: 20),
-
-                // Email textfield
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                  child: TextField(
-                    controller: _emailController,
-                    decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.white),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.deepOrange[700]!),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      hintText: 'Почта',
-                      hintStyle: const TextStyle(
-                        fontSize: 18,
-                      ),
-                      fillColor: Colors.grey[200],
-                      filled: true,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 10),
-
-                // Password textfield
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                  child: TextField(
-                    obscureText: true,
-                    controller: _passwordController,
-                    decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.white),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.deepOrange[700]!,
-                        ),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      hintText: 'Пароль',
-                      hintStyle: const TextStyle(
-                        fontSize: 18,
-                      ),
-                      fillColor: Colors.grey[200],
-                      filled: true,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 10),
-
-                // Forget password textfield
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                const Icon(Icons.school, size: 100, color: Colors.black),
+                const SizedBox(height: 100),
+                const AuthTypeText(text: 'Вход'),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) {
-                            return const ForgotPasswordPage();
-                          }));
-                        },
-                        child: const Text(
-                          'Забыли пароль?',
-                          style: TextStyle(
-                            color: Colors.blue,
-                            fontWeight: FontWeight.normal,
-                          ),
-                        ),
-                      ),
+                      Text('Почта'),
                     ],
                   ),
                 ),
-
-                const SizedBox(height: 20),
-
-                // Sign in button
-                MaterialButton(
-                  minWidth: 200,
-                  onPressed: signIn,
-                  color: Colors.deepOrange[700],
-                  child: const Text(
-                    'Войти',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.normal,
-                      fontSize: 17,
-                    ),
+                AuthTextField(controller: emailController, obscureText: false),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Row(
+                    children: [
+                      const Text('Пароль'),
+                      const Spacer(),
+                      AuthActiveText(
+                          text: 'Забыли пароль?',
+                          onTap: () {
+                            Navigator.of(context).pushNamed('/forgot_password');
+                          }),
+                    ],
                   ),
                 ),
-                const SizedBox(height: 20),
-
-                // Register if not member
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text(
-                      'Нет аккаунта?',
-                      style: TextStyle(
-                        fontWeight: FontWeight.normal,
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: widget.showRegisterPage,
-                      child: const Text(
-                        ' Зарегистрируйтесь',
-                        style: TextStyle(
-                          color: Colors.blue,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ],
+                AuthTextField(
+                    controller: passwordController, obscureText: true),
+                AuthButton(
+                  text: 'Войти',
+                  onPressed: () async {
+                    try {
+                      await authRepository.signIn(
+                        emailController.text.trim(),
+                        passwordController.text.trim(),
+                      );
+                    } on FirebaseAuthException catch (e) {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text(e.message.toString()),
+                      ));
+                    }
+                  },
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text('Нет аккаунта? '),
+                      AuthActiveText(
+                          text: 'Зарегистрироваться',
+                          onTap: () {
+                            Navigator.of(context).pushNamed('/register');
+                          }),
+                    ],
+                  ),
                 ),
               ],
             ),
